@@ -14,7 +14,6 @@ var vm = new Vue({
         websiteInfo: ''
     },
     created: function() {
-      console.log("999");
       setTimeout(function(){
         if (!vm.websiteInfo) {
             return
