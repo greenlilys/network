@@ -40,4 +40,9 @@
         <param name="app_key" value="ebab6fba804fb7f7749a086d" />
         <param name="channel" value="tianniu-shops-push" />
     </feature>
+    <feature name="wx">
+      <param name="urlScheme" value="wxd25204dd5ae366b9"/>
+      <param name="apiKey" value="wxd25204dd5ae366b9"/>
+      <param name="apiSecret" value="6bcb21d56f24629409f8875c5234e1e0"/>
+  </feature>
 </widget>
