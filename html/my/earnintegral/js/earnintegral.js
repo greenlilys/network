@@ -80,17 +80,6 @@ var vm = new Vue({
         // 生成二维码程序
         makeCodeqrcode: function() {
             $('#qrcode').html('');
-
-            // 生成二维码程序
-            // var qrcode = new QRCode(document.getElementById("qrcode"), {
-            //     render: "canvas",
-            //     text: 'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo,
-            //     width: 100, //设置宽高
-            //     height: 100,
-            //     background: "#ffffff", //二维码的后景色
-            //     foreground: "#62b701"
-            // });
-
             $('#qrcode').qrcode({
                render: "canvas",
               // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
@@ -100,18 +89,6 @@ var vm = new Vue({
                background : "#fff",       //二维码的后景色
                foreground : "#000",        //二维码的前景色
             });
-            // var identcode = "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo; // 二维码内容
-            // qrcode.makeCode(identcode);
-
-            // $('#qrcode').qrcode({
-            //      render: "canvas",
-            //     // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
-            //      text  : "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo, // 二维码内容
-            //      width : 90,               //二维码的宽度
-            //      height : 90,              //二维码的高度
-            //      background : "#ffffff",       //二维码的后景色
-            //      foreground : "#62b701",        //二维码的前景色
-            //   });
 
             $('#qrcodeBig').html('');
             // 生成大图二维码
@@ -121,17 +98,6 @@ var vm = new Vue({
             });
             var identcode2 = "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo; // 二维码内容
             qrcodeBig.makeCode(identcode2);
-
-            // $('#qrcodeBig').html('');
-            // $('#qrcodeBig').qrcode({
-            //    render: "table",
-            //   // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
-            //    text  : "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo, // 二维码内容
-            //    width : 300,               //二维码的宽度
-            //    height : 300,              //二维码的高度
-            //    background : "#ffffff",       //二维码的后景色
-            //    foreground : "#62b701",        //二维码的前景色
-            // });
         },
         qrcodebigImg: function() {
             // 二维码大图
