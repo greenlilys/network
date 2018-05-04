@@ -13,6 +13,17 @@ var vm = new Vue({
         UILoadId: '',
         websiteInfo: ''
     },
+    created: function() {
+      console.log("999");
+      setTimeout(function(){
+        if (!vm.websiteInfo) {
+            return
+        } else {
+          console.log("ddd");
+            vm.makeCodeqrcode();
+        }
+      },600)
+    },
     methods: {
         //初始化
         init: function() {
@@ -20,6 +31,7 @@ var vm = new Vue({
             // 获取网点账户
             vm.getwebsiteInfo();
         },
+
         // // 获取店铺信息详情
         // getuserInfo: function() {
         //     // 加载框
@@ -51,32 +63,48 @@ var vm = new Vue({
         // },
         getwebsiteInfo: function() {
             apps.axget(
-              "sysSet/selectShopUsername", {},
-              function(data) {
-                // alert(JSON.stringify(data));
-                if (data) {
-                    vm.websiteInfo = '';
-                    vm.websiteInfo = data.username;
-                    if (vm.websiteInfo) {
-                      // 预约中再生成二维码
-                      vm.makeCodeqrcode();
+                "sysSet/selectShopUsername", {},
+                function(data) {
+                    // alert(JSON.stringify(data));
+                    if (data) {
+                        vm.websiteInfo = '';
+                        vm.websiteInfo = data.username;
+                        if (vm.websiteInfo) {
+                            // 预约中再生成二维码
+                            vm.makeCodeqrcode();
+                        }
                     }
-                }
-            });
+                });
         },
+
         // 生成二维码程序
         makeCodeqrcode: function() {
             $('#qrcode').html('');
+
             // 生成二维码程序
-            var qrcode = new QRCode(document.getElementById("qrcode"), {
-                width: 100, //设置宽高
-                height: 100
+            // var qrcode = new QRCode(document.getElementById("qrcode"), {
+            //     render: "canvas",
+            //     text: 'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo,
+            //     width: 100, //设置宽高
+            //     height: 100,
+            //     background: "#ffffff", //二维码的后景色
+            //     foreground: "#62b701"
+            // });
+
+            $('#qrcode').qrcode({
+               render: "canvas",
+              // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
+               text: 'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo, // 二维码内容
+               width : 80,               //二维码的宽度
+               height : 80,              //二维码的高度
+               background : "#fff",       //二维码的后景色
+               foreground : "#000",        //二维码的前景色
             });
-            var identcode = "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo; // 二维码内容
-            qrcode.makeCode(identcode);
+            // var identcode = "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo; // 二维码内容
+            // qrcode.makeCode(identcode);
 
             // $('#qrcode').qrcode({
-      	    //      render: "canvas",
+            //      render: "canvas",
             //     // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
             //      text  : "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo, // 二维码内容
             //      width : 90,               //二维码的宽度
@@ -95,24 +123,27 @@ var vm = new Vue({
             qrcodeBig.makeCode(identcode2);
 
             // $('#qrcodeBig').html('');
-              // $('#qrcodeBig').qrcode({
-      	      //    render: "table",
-              //   // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
-              //    text  : "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo, // 二维码内容
-              //    width : 300,               //二维码的宽度
-              //    height : 300,              //二维码的高度
-              //    background : "#ffffff",       //二维码的后景色
-              //    foreground : "#62b701",        //二维码的前景色
-              // });
+            // $('#qrcodeBig').qrcode({
+            //    render: "table",
+            //   // text  : "http://192.168.0.107:8088/users/userRegister?iPhone=" + vm.userPhone, // 二维码内容
+            //    text  : "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.websiteInfo, // 二维码内容
+            //    width : 300,               //二维码的宽度
+            //    height : 300,              //二维码的高度
+            //    background : "#ffffff",       //二维码的后景色
+            //    foreground : "#62b701",        //二维码的前景色
+            // });
         },
         qrcodebigImg: function() {
             // 二维码大图
-            apps.openMapWinUrl('openqrcode_img', 'battery/appointinfo/openqrcode_img.html', { qrcodebigImg: $('#qrcodeBig').html() });
+            apps.openMapWinUrl('openqrcode_img', 'battery/appointinfo/openqrcode_img.html', {
+                qrcodebigImg: $('#qrcodeBig').html()
+            });
         },
     },
 });
 
 apiready = function() {
+
     api.parseTapmode();
     //下拉刷新
     apps.pageDataF5(function() {
