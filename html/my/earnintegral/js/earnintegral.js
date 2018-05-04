@@ -13,16 +13,16 @@ var vm = new Vue({
         UILoadId: '',
         websiteInfo: ''
     },
-    created: function() {
-      setTimeout(function(){
-        if (!vm.websiteInfo) {
-            return
-        } else {
-          console.log("ddd");
-            vm.makeCodeqrcode();
-        }
-      },600)
-    },
+    // created: function() {
+    //   setTimeout(function(){
+    //     if (!vm.websiteInfo) {
+    //         return
+    //     } else {
+    //       console.log("ddd");
+    //         vm.makeCodeqrcode();
+    //     }
+    //   },600)
+    // },
     methods: {
         //初始化
         init: function() {
