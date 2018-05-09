@@ -1,7 +1,7 @@
 .block-bj{
     background: url("../images/ewmbk_09.png") no-repeat;
     background-size: 100% 100%;
-    height:10rem;
+    height:11rem;
     margin: 0 auto;
 }
 .block-item{
@@ -12,4 +12,43 @@
 }
 .green{
     color:#315c00;
+}
+#qrcode{
+  width: 7rem;
+  height:7rem;
+  margin:0 auto 0.3rem auto;
+  background:#fff;
+  display: -moz-box;  /* Firefox */
+  display: -ms-flexbox;    /* IE10 */
+  display: -webkit-box;    /* Safari */
+  display: -webkit-flex;    /* Chrome, WebKit */
+  display: box;
+  display: flexbox;
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
+}
+
+.shareBtn{
+  display:inline-block;
+text-align:center;
+line-height: 2rem ;
+font-size:1rem;
+background:green;
+margin:0 auto;
+border-radius: 10px;
+padding:0 8px;
+}
+#shareBox{
+  display: -moz-box;  /* Firefox */
+  display: -ms-flexbox;    /* IE10 */
+  display: -webkit-box;    /* Safari */
+  display: -webkit-flex;    /* Chrome, WebKit */
+  display: box;
+  display: flexbox;
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
 }

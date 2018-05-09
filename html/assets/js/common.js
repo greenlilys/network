@@ -19,8 +19,8 @@ var jumpUrl = {}; //跳转页面
         // 'serviceIP': 'http://192.168.1.121:80/',
         // 'serviceIP': 'http://120.27.204.61:8080/',
 	/** 测试后台 */
-        //  'serviceIP': 'http://192.168.0.105:8080/'
-        'serviceIP': 'http://tianniu.weidinghuo.com/'
+         'serviceIP': 'http://192.168.0.101:8080/'
+        // 'serviceIP': 'http://tianniu.weidinghuo.com/'
     };
 
     // 项目访问 前端路径后缀

@@ -8,73 +8,104 @@
     <title>打开二维码大图</title>
     <link rel="stylesheet" type="text/css" href="../../assets/css/aui.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/common.css">
-    <link rel="stylesheet" type="text/css" href="css/insatall.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./css/insatall.css"> -->
     <style type="text/css">
     body {
-        /*background: transparent;*/
-        background: rgba(255,255,255,255);
         padding: 0;
         margin: 0;
-        padding-top: 30px;
-    }
-
-    .info .info div {
-        height: 100%;
-        width: 92%;
-        border-radius: 6px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 999;
-        background: none;
-    }
-
-    .qrcodebigImg {
-        height: 300px;
-        width: 300px;
-        margin: 4rem auto 2rem auto;
-        position: relative;
-        z-index: 999;
+        background:#7CC51B;
+        padding-top:50px;
     }
 
     .icon-close {
-        width: 4rem;
-        height: 4rem;
-        color: #000;
-        line-height: 4rem;
+      width: 50px;
+      height: 50px;
+        color: #fff;
+        line-height: 50px;
         text-align: center;
         border-radius: 50%;
-        font-size: 2.5rem;
-        border: 1px solid #000;
-        padding: 0.3rem;
+        font-size:40px;
+        border: 1px solid #fff;
     }
 
     .closeFrames {
-        width: 50px;
-        height: 50px;
-        margin:0 auto;
+        width:100%;
+        position:absolute;
+        bottom:30px;
+        display: -moz-box;  /* Firefox */
+        display: -ms-flexbox;    /* IE10 */
+        display: -webkit-box;    /* Safari */
+        display: -webkit-flex;    /* Chrome, WebKit */
+        display: box;
+        display: flexbox;
+        display:flex;
+        flex-direction:row;
+        align-items: center;
+        justify-content: center;
+
     }
+    #imgBox{
+        height: 380px;
+        width: 280px;
+        margin:0 auto;
+        padding:20px;
+        background:#fff;
+        padding:20px;
+    }
+    .descrip{
+      margin-top:20px;
+      border-top:1px solid #ccc;
+      padding-top:18px;
+      text-align: justify;
+    }
+
     </style>
 </head>
 
 <body>
-    <div class="qrcodebigImg" id="qrcodebigImg">
-    </div>
-    <div class="closeFrames" onclick="close_Winiframs()">
-        <i class="aui-iconfont aui-icon-close icon-close"></i>
-    </div>
+        <div class="qrcodebigImg" id="qrcodebigImg"></div>
+        <div id="imgBox">
+            <img id="img">
+            <div class="descrip">
+
+        每推荐一位新注册用户，新用户完成安装注册后，推荐人每次可获得2000天牛币，新用户可获得1000天牛币。
+            </div>
+        </div>
+
+        <div class="closeFrames" onclick="close_Winiframs()">
+            <i class="aui-iconfont aui-icon-close icon-close"></i>
+        </div>
 </body>
 
 </html>
+<!-- <script src="http://hammerjs.github.io/dist/hammer.min.js"></script> -->
 <script type="text/javascript" src="../../assets/js/api.js"></script>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../assets/js/jquery.qrcode.min.js"></script>
 <script type="text/javascript" src="../../assets/js/zepto.min.js"></script>
 <script type="text/javascript" src="../../assets/js/common.js"></script>
 <script type="text/javascript" src="../../assets/js/vue.min.js"></script>
 <script type="text/javascript">
 apiready = function() {
     api.parseTapmode();
-    console.log(api.pageParam.qrcodebigImg);
     var qrcodebigImg = api.pageParam.qrcodebigImg;
-    $('#qrcodebigImg').html(qrcodebigImg);
+    var qrcode = $("#qrcodebigImg").qrcode({
+    			render:'canvas',
+    			width: 240,
+    			height:240,
+    			text: qrcodebigImg
+    		}).hide();
+    var canvas=$("#qrcodebigImg").find('canvas').get(0);
+  //如果有循环,此句必不可少 qrcode.find('canvas').remove();
+  var urls = canvas.toDataURL('image/jpg');
+  $('#img').attr('src',urls) ;
+
+
+//长按点击事件
+//   var hammertime = new Hammer(document.getElementById("imgBox"));
+//   hammertime.on("press", function (e) {
+//     alert("超过500ms");
+// });
 }
 
 function close_Winiframs() {
@@ -83,4 +114,6 @@ function close_Winiframs() {
         hidden: true
     });
 }
+
+
 </script>
