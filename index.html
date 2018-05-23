@@ -46,41 +46,41 @@
 apiready = function() {
 
   //初始化极光推送
-  var ajpush = api.require('ajpush');
-  ajpush.init(function(ret) {
-    if (ret && ret.status){
-      //success
-      // alert("初始化了极光推送!");
-    }
-  });
+  // var ajpush = api.require('ajpush');
+  // ajpush.init(function(ret) {
+  //   if (ret && ret.status){
+  //     //success
+  //     // alert("初始化了极光推送!");
+  //   }
+  // });
 
   //设置不自动弹出通知到手机状态栏监听
-    ajpush.setListener(
-    function(ret) {
-       var id = ret.id;
-       var title = ret.title;
-       var content = ret.content;
-       var extra = ret.extra;
-    }
-  );
+  //   ajpush.setListener(
+  //   function(ret) {
+  //      var id = ret.id;
+  //      var title = ret.title;
+  //      var content = ret.content;
+  //      var extra = ret.extra;
+  //   }
+  // );
   //移除消息监听
   // ajpush.removeListener();
 
   //停止push推送
-  ajpush.stopPush(function(ret) {
-    if(ret && ret.status){
-      //success
-      // alert("停止了push推送！");
-    }
-  });
+  // ajpush.stopPush(function(ret) {
+  //   if(ret && ret.status){
+  //     //success
+  //     // alert("停止了push推送！");
+  //   }
+  // });
 
   //恢复push推送
-  ajpush.resumePush(function(ret) {
-    if(ret && ret.status){
-      //success
-      // alert("恢复了push推送！");
-    }
-  });
+  // ajpush.resumePush(function(ret) {
+  //   if(ret && ret.status){
+  //     //success
+  //     // alert("恢复了push推送！");
+  //   }
+  // });
   //监听通知被点击事件
   api.addEventListener({
       name: 'appintent'
@@ -90,13 +90,13 @@ apiready = function() {
       }
   });
 
-  api.addEventListener({name:'pause'}, function(ret,err) {
-      onPause();//监听应用进入后台，通知jpush暂停事件
-  });
-
-  api.addEventListener({name:'resume'}, function(ret,err) {
-      onResume();//监听应用恢复到前台，通知jpush恢复事件
-  });
+  // api.addEventListener({name:'pause'}, function(ret,err) {
+  //     onPause();//监听应用进入后台，通知jpush暂停事件
+  // });
+  //
+  // api.addEventListener({name:'resume'}, function(ret,err) {
+  //     onResume();//监听应用恢复到前台，通知jpush恢复事件
+  // });
 
     api.setStatusBarStyle({
         style: 'light'

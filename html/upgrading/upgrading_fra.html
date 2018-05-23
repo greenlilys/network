@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>升级配置fra</title>
+  <link rel="stylesheet" type="text/css" href="../assets/css/aui.css">
+  <link rel="stylesheet" type="text/css" href="./css/upgrading.css">
+</head>
+<body id="content">
+<div id="main" v-cloak>
+  <template v-if="batteryCun.msg == 1">
+    <div class="aui-padded-15 flex-wrap flex-vertical">
+      <div class="aui-text-center">您已达到最低配置要求，请点击提交按钮确认！</div>
+      <div class="putin" @click="putShopInfo">提&nbsp;&nbsp;&nbsp;&nbsp;交</div>
+    </div>
+  </template>
+  <template v-else>
+      <div class="pad">
+            <h2 class="border-b">网点端客户最低配置升级清单明细</h2>
+            <ul class="list">
+              <li class="border-b flex-wraph"><span>规格</span><span>应补数量</span></li>
+              <li class="border-b flex-wraph"><span>48V/20A</span><span>0</span></li>
+              <li class="border-b flex-wraph"><span>60V/20A</span><span>{{6-batteryCun.Six}}</span></li>
+              <li class="flex-wraph"><span>72V/20A</span><span>{{9-batteryCun.Seven}}</span></li>
+            </ul>
+      </div>
+      <ul class="aui-list aui-list-noborder aui-padded-b-15">
+          <div class="aui-title aui-padded-15">• 支付方式</div>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner" @click="paymodeBtn('0')">
+                  <div class="aui-list-item-title">
+                      <img src="../assets/image/zfb_03.png" style="width: 1.5rem;" class="aui-pull-left aui-margin-r-10">
+                      <span style="line-height: 1.5rem;">支付宝</span>
+                  </div>
+                  <div class="aui-list-item-right">
+                      <input type="radio" class="aui-radio" name="paymode" value="0" v-model="paymode">
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner" @click="paymodeBtn('1')">
+                  <div class="aui-list-item-title">
+                      <img src="../assets/image/wx_03.png" style="width: 1.5rem;" class="aui-pull-left aui-margin-r-10">
+                      <span style="line-height: 1.5rem;">微信</span>
+                  </div>
+                  <div class="aui-list-item-right">
+                      <input type="radio" class="aui-radio" name="paymode" value="1" v-model="paymode">
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner" @click="paymodeBtn('2')">
+                  <div class="aui-list-item-title">
+                      <img src="../assets/image/qb_03.png" style="width: 1.5rem;" class="aui-pull-left aui-margin-r-10">
+                      <span style="line-height: 1.5rem;">钱包</span>（余额 ￥ {{wallet ? wallet:'0'}}）
+                  </div>
+                  <div class="aui-list-item-right">
+                      <input type="radio" class="aui-radio" name="paymode" value="2" v-model="paymode">
+                  </div>
+              </div>
+          </li>
+
+      </ul>
+      <h3 class="flex-wraph"><span>应付押金总额:<span class="totalmoney">￥{{batteryCun.amount}}</span></span><div class="payBtn" onclick="payBtn()">支&nbsp;&nbsp;付</div></h3>
+  </template>
+
+</div>
+</body>
+<script type="text/javascript" src="../assets/js/api.js"></script>
+<script type="text/javascript" src="../assets/js/common.js"></script>
+<script type="text/javascript" src="../assets/js/vue.min.js"></script>
+<script type="text/javascript" src="./js/upgrading_fra.js"></script>
+
+</html>

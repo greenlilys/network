@@ -52,49 +52,61 @@ var vm = new Vue({
                 jumpUrl.login();
             }
             vm.getbatterySelect();
-
             var timer;
             var timerArr = [];
-            timer = setInterval(function() {
-              apps.axget(
-                  "rescue/selectRescue", {
-                    pageNo: vm.pageNo,
-                    pageSize: vm.pageSize
-                  },
-                  function(data) {
-                      vm.rescueOrder_data.rescueOrderList.splice(0,vm.rescueOrder_data.rescueOrderList.length);
-                      vm.rescueOrder_data.rescueOrderList = data;
-                      // alert(JSON.stringify(data));
-                      if (vm.rescueOrder_data.rescueOrderList.length) {
-                        if (vm.rescueOrder_data.rescueOrderList[0].paystate == 1 && vm.rescueOrder_data.rescueOrderList[0].istakestate == 1) {
-                            // 时间转换时间戳
-                            var now = Date.parse(new Date());
-                            var rescueTime = Date.parse(vm.rescueOrder_data.rescueOrderList[0].addtime);
-                            var nowDay = now / 86400000;
-                            var rescueDay = rescueTime / 86400000;
-                            if (nowDay - rescueDay < 1) {
-                              for (var i = 0; i < timerArr.length; i++) {
-                                  clearInterval(timerArr[i]);
-                              }
-                              alert("用户支付了救援订单。");
-                            }else {
-                                for (var i = 0; i < timerArr.length; i++) {
-                                    clearInterval(timerArr[i]);
-                                }
-                            }
-                        }
-                        for (var i = 0; i < vm.rescueOrder_data.rescueOrderList.length; i++) {
-                            if (vm.rescueOrder_data.rescueOrderList[i].paystate == 0 && vm.rescueOrder_data.rescueOrderList[i].istakestate == 2) {
-                                for (var i = 0; i < timerArr.length; i++) {
-                                    clearInterval(timerArr[i]);
-                                }
-                                alert("你有一个新的订单，请在“我的”-“救援订单”选择“接单”或者“撤销订单”。");
-                            }
-                        }
-                      }
-                  });
-            },20000);
-            timerArr.push(timer);
+            // timer = setInterval(function() {
+            //   apps.axget(
+            //       "rescue/selectRescue", {
+            //         pageNo: vm.pageNo,
+            //         pageSize: vm.pageSize
+            //       },
+            //       function(data) {
+            //           vm.rescueOrder_data.rescueOrderList.splice(0,vm.rescueOrder_data.rescueOrderList.length);
+            //           vm.rescueOrder_data.rescueOrderList = data;
+            //           // alert(JSON.stringify(data));
+            //           if (vm.rescueOrder_data.rescueOrderList.length) {
+            //             if (vm.rescueOrder_data.rescueOrderList[0].paystate == 1 && vm.rescueOrder_data.rescueOrderList[0].istakestate == 1) {
+            //                 // 时间转换时间戳
+            //                 var now = Date.parse(new Date());
+            //                 var rescueTime = Date.parse(vm.rescueOrder_data.rescueOrderList[0].addtime);
+            //                 var nowDay = now / 86400000;
+            //                 var rescueDay = rescueTime / 86400000;
+            //                 if (nowDay - rescueDay < 1) {
+            //                   for (var i = 0; i < timerArr.length; i++) {
+            //                       clearInterval(timerArr[i]);
+            //                   }
+            //                   alert("用户支付了救援订单。");
+            //                 }else {
+            //                     for (var i = 0; i < timerArr.length; i++) {
+            //                         clearInterval(timerArr[i]);
+            //                     }
+            //                 }
+            //             }
+            //             for (var i = 0; i < vm.rescueOrder_data.rescueOrderList.length; i++) {
+            //                 if (vm.rescueOrder_data.rescueOrderList[i].paystate == 0 && vm.rescueOrder_data.rescueOrderList[i].istakestate == 2) {
+            //                     for (var i = 0; i < timerArr.length; i++) {
+            //                         clearInterval(timerArr[i]);
+            //                     }
+            //                     alert("你有一个新的订单，请在“我的”-“救援订单”选择“接单”或者“撤销订单”。");
+            //                 }
+            //             }
+            //           }
+            //       });
+            // },20000);
+            // timerArr.push(timer);
+        },
+
+        //跳转到升级最低配置页面
+        navUpgrading:function(){
+              api.openWin({
+                name: 'upgrading_win',
+                url: 'widget://html/upgrading/upgrading_win.html',
+                pageParam: {
+
+                },
+                bounces:false,
+                bgColor:'#747474'
+            });
         },
         //获取电池
         getbatterySelect: function() {

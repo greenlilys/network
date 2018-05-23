@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>升级配置win</title>
+  <link rel="stylesheet" type="text/css" href="../assets/css/aui.css">
+  <style>
+html,body{
+  width:100%;
+  height:100%;
+}
+  #content header.aui-bar{
+    background:#7EC32F;
+    /*position:fixed;*/
+  }
+  #content{
+    background:#fff;
+  }
+  </style>
+</head>
+<body id="content">
+  <header class="aui-bar aui-bar-nav">
+      <a class="aui-pull-left aui-btn" onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left">返回</span>
+      </a>
+      <div class="aui-title">升级配置</div>
+  </header>
+</body>
+<script type="text/javascript" src="../assets/js/api.js"></script>
+<script type="text/javascript" src="../assets/js/common.js"></script>
+<script type="text/javascript" src="../assets/js/vue.min.js"></script>
+<script>
+var vm  = new Vue({
+  el:'#content',
+  data:{
+    batteryCun:{}
+  },
+  methods:{
+    //获取网点电池配置信息
+    getbatteryCun:function(){
+      apps.axget("shopBattery/selectShopOverpay",{},function(data){
+        if(data){
+          console.log(JSON.stringify(data));
+          vm.batteryCun = data;
+          apps.loadWinUrl("upgrading_fra","upgrading/upgrading_fra.html",{
+              data:vm.batteryCun
+          })
+        }
+      })
+    },
+  }
+})
+  apiready = function(){
+    $api.fixStatusBar($api.dom('header'));
+    vm.getbatteryCun();
+  }
+</script>
+</html>

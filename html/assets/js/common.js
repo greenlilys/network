@@ -19,7 +19,8 @@ var jumpUrl = {}; //跳转页面
         // 'serviceIP': 'http://192.168.1.121:80/',
         // 'serviceIP': 'http://120.27.204.61:8080/',
 	/** 测试后台 */
-         'serviceIP': 'http://192.168.0.101:8080/'
+        //  'serviceIP': 'http://192.168.0.101:8080/'
+         'serviceIP': 'http://192.168.0.112:8080/'
         // 'serviceIP': 'http://tianniu.weidinghuo.com/'
     };
 
@@ -191,7 +192,7 @@ var jumpUrl = {}; //跳转页面
             if (getData) {
                 // 成功返回后，各种状态码
                 allSuccessFun(getData, successfn, codefn);
-                console.log('传输参数：' + JSON.stringify(param));
+                // console.log('传输参数：' + JSON.stringify(param));
             } else {
                 allErrorsFun(err);
             }
@@ -633,7 +634,7 @@ function allSuccessFun(getData, successfn, codefn) {
 
     all_errors_count = 0;
     if (getData) {
-        console.log('返回数据：' + JSON.stringify(getData));
+        // console.log('返回数据：' + JSON.stringify(getData));
 
         // vue判断dom是否加载完毕
         /*vm.$nextTick(function() {

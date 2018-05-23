@@ -31,14 +31,16 @@
 }
 
 .shareBtn{
+  color:#fff;
   display:inline-block;
 text-align:center;
-line-height: 2rem ;
-font-size:1rem;
-background:green;
+line-height: 28px ;
+font-size:14px;
 margin:0 auto;
-border-radius: 10px;
-padding:0 8px;
+border-radius:15px;
+padding:0 10px;
+background: -webkit-linear-gradient(right, #87de00 , #f39c00,#ff701b);
+background: linear-gradient(to right,#87de00 ,#f39c00, #ff701b);
 }
 #shareBox{
   display: -moz-box;  /* Firefox */

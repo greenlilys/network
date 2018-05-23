@@ -61,8 +61,8 @@
 
         <!-- 当前预约 -->
         <h3 class="aui-text-center aui-margin-t-15 aui-padded-15">当前预约</h3>
-        <div class="aui-content block-tk">
-          <div v-if="noOrder">
+        <div class="aui-content">
+          <!-- <div v-if="noOrder">
             <ul v-for="(index,item) in batteryselect.types">
                 <li class="aui-padded-15 price aui-col-xs-8" style="text-align:right;">
                   <span v-if="item.batteryid == 5">48V20AH 单组锂电池</span><span v-if="item.batteryid == 6">60V20AH 单组锂电池</span><span v-if="item.batteryid == 7">72V20AH 单组锂电池</span>
@@ -71,8 +71,10 @@
                   <span v-if="item.type == 0">安装</span><span v-if="item.type == 1">换电</span><span v-if="item.type == 2">退租</span>
                 </li>
             </ul>
+          </div> -->
+          <div class="aui-padded-15">
+            <div class="aui-text-center block-tk aui-padded-15" v-if="noOrder == 0">暂无预约任务</div>
           </div>
-          <div class="aui-text-center aui-padded-15 aui-content block-tk" v-if="noOrder == 0">暂无预约任务</div>
         </div>
 
         <!-- 今日预约 -->
@@ -107,6 +109,9 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        <div class="aui-padded-15" @click="navUpgrading">
+          <div class="aui-text-center block-tk aui-padded-15">升级到最低配置</div>
         </div>
     </div>
 </body>

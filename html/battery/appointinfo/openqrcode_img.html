@@ -8,14 +8,18 @@
     <title>打开二维码大图</title>
     <link rel="stylesheet" type="text/css" href="../../assets/css/aui.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/common.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./css/insatall.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/insatall.css">
     <style type="text/css">
+    html,body {height: 100%;}
     body {
-        padding: 0;
-        margin: 0;
         background:#7CC51B;
-        padding-top:50px;
+        padding-top:2rem;
+
     }
+    .border-t,.border-b {position: relative;}
+    .border-t:before,.border-b:after {content: '';position: absolute;left: 0;top: 0;background: #ddd;right: 0;height: 1px;-webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);-webkit-transform-origin: 0 0;transform-origin: 0 0;}
+    .border-b:after {top: auto;bottom: 0;}
 
     .icon-close {
       width: 50px;
@@ -31,7 +35,7 @@
     .closeFrames {
         width:100%;
         position:absolute;
-        bottom:30px;
+        bottom:3.8rem;
         display: -moz-box;  /* Firefox */
         display: -ms-flexbox;    /* IE10 */
         display: -webkit-box;    /* Safari */
@@ -45,68 +49,385 @@
 
     }
     #imgBox{
-        height: 380px;
-        width: 280px;
+        height: 24rem;
+        width: 80%;
         margin:0 auto;
-        padding:20px;
+        padding:1rem;
         background:#fff;
-        padding:20px;
+        padding-top:1.5rem;
+
     }
     .descrip{
-      margin-top:20px;
-      border-top:1px solid #ccc;
-      padding-top:18px;
+      margin-top:1rem;
+      padding-top:0.9rem;
       text-align: justify;
     }
+    #img {
+      display: inline-block;
+      width:100%;
+      height:auto;
+    }
+    #content{
+      height:100%;
+      width:100%;
+      position:relative;
+      overflow: hidden;
+    }
+    .sheetList{
+      width:100%;
+      position:absolute;
+      left:0;
+      bottom:-100px;
+      index:100;
+      background:#F5F5F5;
+    }
+    .item,.quxiao{
+      background:#fff;
+        width:100%;
+    }
+    .quxiao{
+      margin-top:0.6rem;
+      color:#747474;
+    }
 
+    .item li, .quxiao{
+      height:2.8rem;
+      line-height: 2.8rem;
+      text-align: center;
+    }
+    .item li:active, .quxiao:active{
+      background:#F5F5F5;
+    }
     </style>
 </head>
 
 <body>
-        <div class="qrcodebigImg" id="qrcodebigImg"></div>
-        <div id="imgBox">
+    <div id="content">
+        <div id="imgBox" ontouchstart="touchstart()" ontouchend="touchend()" ontouchmove="touchmove()">
             <img id="img">
-            <div class="descrip">
-
-        每推荐一位新注册用户，新用户完成安装注册后，推荐人每次可获得2000天牛币，新用户可获得1000天牛币。
+            <div class="descrip border-t">
+                每推荐一位新注册用户，新用户完成安装注册后，推荐人每次可获得2000天牛币，新用户可获得1000天牛币。
             </div>
         </div>
-
         <div class="closeFrames" onclick="close_Winiframs()">
             <i class="aui-iconfont aui-icon-close icon-close"></i>
         </div>
+        <div class="sheetList">
+          <div class="item">
+            <ul>
+              <li class="border-b" onclick="obj.saveImg()">保存图片</li>
+              <li class="border-b" onclick="obj.shareImg()">分享推广二维码到朋友圈</li>
+              <li onclick="obj.shareWebPage()">分享推广注册页面到朋友圈</li>
+            </ul>
+          </div>
+          <div class="quxiao" onclick="quxiao()">
+            取消
+          </div>
+        </div>
+    </div>
 </body>
 
 </html>
-<!-- <script src="http://hammerjs.github.io/dist/hammer.min.js"></script> -->
 <script type="text/javascript" src="../../assets/js/api.js"></script>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
-<script type="text/javascript" src="../../assets/js/jquery.qrcode.min.js"></script>
-<script type="text/javascript" src="../../assets/js/zepto.min.js"></script>
 <script type="text/javascript" src="../../assets/js/common.js"></script>
 <script type="text/javascript" src="../../assets/js/vue.min.js"></script>
 <script type="text/javascript">
+var sheetListHeight = $api.dom('.sheetList').offsetHeight;
+$('.sheetList').css("bottom","-" + sheetListHeight + "px");
+var obj = {};
 apiready = function() {
-    api.parseTapmode();
-    var qrcodebigImg = api.pageParam.qrcodebigImg;
-    var qrcode = $("#qrcodebigImg").qrcode({
-    			render:'canvas',
-    			width: 240,
-    			height:240,
-    			text: qrcodebigImg
-    		}).hide();
-    var canvas=$("#qrcodebigImg").find('canvas').get(0);
-  //如果有循环,此句必不可少 qrcode.find('canvas').remove();
-  var urls = canvas.toDataURL('image/jpg');
-  $('#img').attr('src',urls) ;
+  api.parseTapmode();
+  var imgUrl = api.pageParam.imgUrl;
+  var userPhone = api.pageParam.userPhone;
+  $('#img').attr('src',imgUrl);
+  obj.saveImg = saveImg;
+  obj.shareImg = shareImg;
+  obj.shareWebPage = shareWebPage;
+  var savaName = "tnerweima.png";
+   var wx = api.require('wx');
+  // 保存二维码图片
+       function saveImg() {
+           api.download({
+               url: imgUrl,
+               savePath: 'fs://' + savaName,
+               report: true,
+               cache: true,
+               allowResume: true
+           }, function(ret, err) {
+               if (ret.state == 1) {
+                   //下载成功
+                 var path = ret.savePath;
+                 api.saveMediaToAlbum({
+                     path: path
+                 }, function(ret, err) {
+                     if (ret && ret.status) {
+                       quxiao();
+                      toast('保存成功');
 
+                     } else {
+                        toast(err.msg);
+                     }
+                 })
+               } else {
+                   toast(err.msg);
+               }
+           });
+       }
+ //分享二维码图片到朋友圈
+       function shareImg(){
+        api.download({
+          url: imgUrl,
+          savePath: 'fs://' + savaName,
+          report: true,
+          cache: true,
+          allowResume: true
+        },function(ret, err){
+           if (ret.state == 1) {
+             var shareImgUrl = ret.savePath;
+              //检测是否安装了微信客户端
+             wx.isInstalled(function(ret, err) {
+                 if (ret.installed) {
+                 wx.shareImage({
+                     apiKey: '',
+                     scene: 'timeline',
+                     thumb: '',
+                     contentUrl: shareImgUrl
+                 }, function(ret, err) {
+                     if (ret.status) {
+                       quxiao();
+                         toast('分享成功');
 
-//长按点击事件
-//   var hammertime = new Hammer(document.getElementById("imgBox"));
-//   hammertime.on("press", function (e) {
-//     alert("超过500ms");
-// });
+                     } else {
+                         toast(err.code);
+                     }
+                 });
+                 } else {
+                     toast("当前设备未安装微信客户端");
+                 }
+             });
+
+           }else{
+                   toast({
+               msg:err.msg,
+               location:'middle'
+             })
+           }
+        })
+       }
+
+       //分享注册链接到朋友圈
+        function shareWebPage() {
+           wx.isInstalled(function(ret, err) {
+             //检测是否安装了微信客户端
+               if (ret.installed) {
+                   wx.shareWebpage({
+                       apiKey: '',
+                       scene: 'timeline',
+                       title: '天牛网注册链接',
+                       description: '推广注册链接',
+                       thumb: 'widget://image/logo.jpg',
+                       contentUrl: "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + userPhone
+                   }, function(ret, err) {
+                       if (ret.status) {
+                           toast('分享成功');
+                       } else {
+                           toast('分享失败');
+                       }
+                   });
+               } else {
+                   toast("当前设备未安装微信客户端");
+               }
+           });
+       }
 }
+
+function quxiao(){
+  $(".sheetList").css("bottom","-" + sheetListHeight + "px");
+}
+
+
+
+var timeoutEvent = 0;
+// 开始按
+function touchstart() {
+    // alert("touchstart事件");
+    // 清楚定时器
+    clearTimeout(timeoutEvent);
+    // 设置定时器，定义长按1000毫秒触发长按时间，
+    timeoutEvent = setTimeout("longpress()",800);
+    return false;
+}
+// 手释放，如果在1000毫秒内释放，则取消长按事件，此时执行单击事件
+function touchend() {
+    // 清楚定时器
+    clearTimeout(timeoutEvent);
+    if (timeoutEvent != 0) {
+      // 执行单击事件
+
+    }
+}
+// 如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
+function touchmove() {
+  // 清楚定时器
+  clearTimeout(timeoutEvent);
+  timeoutEvent = 0;
+}
+// 长按事件
+function longpress() {
+  timeoutEvent = 0;
+  //执行长按事件
+  $(".sheetList").css("bottom",0);
+}
+
+
+function openUIMultiSelector() {
+  UIMultiSelector = api.require('UIMultiSelector');
+  UIMultiSelector.open({
+     rect: {
+         h: api.winHeight / 3
+     },
+     text: {
+         title: '选择执行的操作',
+         leftBtn: '取消',
+         rightBtn: '完成'
+     },
+     max: 1,
+     singleSelection: true,
+     maskClose: false,
+     singleSelection: true,
+     styles: {
+         mask: 'rgba(0,0,0,0.8)',
+         title: {
+             bg: 'rgb(221,221,221)',
+             color: 'rgb(0,0,0)',
+             size: 16,
+             h: 44
+         },
+         leftButton: {
+            bg: '#fff',
+             w: 80,
+             h: 35,
+             marginT: 5,
+             marginL: 8,
+             color: 'rgb(0,0,0)',
+             size: 14
+         },
+         rightButton: {
+              bg: '#fff',
+             w: 80,
+             h: 35,
+             marginT: 5,
+             marginR: 8,
+             color: 'rgb(0,0,0)',
+             size: 14
+         },
+         item: {
+             h: 35,
+             bg: 'rgb(255,255,255)',
+             bgActive: 'rgb(221,221,221)',
+             bgHighlight: 'rgb(221,221,221)',
+             color: 'rgb(0,0,0)',
+             active: '#ff7010',
+             highlight: 'rgb(43,213,166)',
+             size: 14,
+             lineColor: 'rgb(0,0,0)',
+             textAlign: 'center'
+         },
+         icon: {
+             w: 20,
+             h: 20,
+             marginT: 11,
+             marginH: 8,
+             bg: '#fff',
+             bgActive: '#ff7010',
+             align: 'left'
+         }
+     },
+     animation: true,
+     items : [{
+         text: '保存图片',
+         status: 'normal'
+     }, {
+         text: '分享朋友圈',
+         status: 'normal'
+     }]
+  }, function(ret, err) {
+     if (ret) {
+         //点击完成按钮
+         if (ret.eventType == "clickRight") {
+           if (ret.items[0].text == "保存图片") {
+              // 执行保存图片
+              api.saveMediaToAlbum({
+                path: 'fs://Screenshots/tnusers.png'
+              }, function(ret, err) {
+                if (ret && ret.status) {
+                  alert(ret.status);
+                  alert('保存成功');
+                } else {
+                  alert(ret.status);
+                  alert('保存失败');
+              }
+            });
+          }
+           if (ret.items[0].text == "分享朋友圈") {
+              // 执行分享朋友圈
+              var wx = api.require('wx');
+              // 检测系统是否安装微信客户端
+              wx.isInstalled(function(ret, err) {
+                if (ret.installed) {
+                  // 通过调用系统图库，获取图片文件
+                  var imageUrl = 0;
+                  api.getPicture({
+                    sourceType: 'library',  // 图片库
+                    encodingType: 'png',
+                    mediaValue: 'pic',
+                    destinationType: 'url',
+                    allowEdit: false,
+                    targetWidth: 100,
+                    targetHeight: 100,
+                    saveToPhotoAlbum: false
+                  }, function(ret, err) {
+                    if (ret) {
+                      // alert(JSON.stringify(ret));
+                      // alert(JSON.stringify(ret.data));
+                      imageUrl = ret.data;
+                    } else {
+                      alert(JSON.stringify(err));
+                    }
+                  });
+
+                  //分享图片
+                  wx.shareImage({
+                    apiKey: 'wxdde7835e5a03853e',
+                    scene: 'timeline',
+                    // thumb: 'widget://res/users.png',
+                    thumb: imageUrl,
+                    // contentUrl: 'widget://res/users.png',
+                    contentUrl: 'fs://Screenshots/tnusers.png'
+                  }, function(ret, err) {
+                    if (ret.status) {
+
+                    } else {
+                      alert("微信分享失败");
+                    }
+                });
+                } else {
+                  alert('您的手机上没有安装微信，所以不支持分享内容到朋友圈。');
+                }
+            });
+           }
+           fnClose();
+         }
+
+         //点击取消按钮
+         if (ret.eventType == "clickLeft") {
+            fnClose();
+         }
+     }
+  });
+}
+
 
 function close_Winiframs() {
     api.setFrameAttr({
@@ -114,6 +435,4 @@ function close_Winiframs() {
         hidden: true
     });
 }
-
-
 </script>

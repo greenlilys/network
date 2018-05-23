@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </li>
-        </ul>
+    </ul>
         <ul class="aui-list aui-media-list">
             <li class="aui-list-item aui-margin-b-15" v-for="item in rescueOrder_data.rescueOrderList">
                 <div class="aui-media-list-item-inner">
@@ -65,7 +65,6 @@
                                         <span class="" v-text="item.cellphone">13546489464</span>
                                         <span class="" style="margin-left:1rem;" @click="settelsBtn(item)"><i class="aui-iconfont aui-icon-phone" style="font-size: 1.2rem;"></i></span>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="aui-list-item-inner aui-col-xs-6 aui-text-center ">
@@ -73,7 +72,7 @@
                                 <!-- orderstate订单状态 0：待维修 1：已维修  2：已撤销 -->
                                 <button style="background:#62b701;color:#ffffff;border:1px solid #62b701;" v-if="item.istakestate == 2" @click=takeOrder(item)>接单</button>&nbsp;&nbsp;
                                 <button style="background:#ff7010;color:#ffffff;border:1px solid #ff7010;" v-if="item.istakestate == 2" @click=refuseOrder(item)>撤销订单</button>
-                                <button style="background:#ff7010;color:#ffffff;border:1px solid #ff7010;" v-if="item.istakestate == 1 && item.paystate == 0" @click=backlog(item)>未完成订单</button>
+                                <!-- <button style="background:#ff7010;color:#ffffff;border:1px solid #ff7010;" v-if="item.istakestate == 1 && item.paystate == 0" @click=backlog(item)>未完成订单</button> -->
                                 <br>
                                 <span class="price" v-if="item.paystate == 0">未付钱</span>
                                 <span class="price" v-if="item.paystate == 1">用户已付钱，订单完成。</span><br>

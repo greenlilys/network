@@ -11,109 +11,37 @@ var vm = new Vue({
     data: {
         selectuserInfo: {},
         UILoadId: '',
-        websiteInfo: ''
+        websiteInfo: '',
+        imgUrl:'',
+        defaultImg:'./images/ewm_09.png'
 
     },
-    // created: function() {
-    //   setTimeout(function(){
-    //     if (!vm.websiteInfo) {
-    //         return
-    //     } else {
-    //       console.log("ddd");
-    //         vm.makeCodeqrcode();
-    //     }
-    //   },600)
-    // },
     methods: {
         //初始化
         init: function() {
-            // vm.getuserInfo();
-            // 获取网点账户
+            // 获取用户登陆手机号推广二维码
             vm.getwebsiteInfo();
         },
 
-        // // 获取店铺信息详情
-        // getuserInfo: function() {
-        //     // 加载框
-        //     var UILoading = api.require('UILoading');
-        //     UILoading.flower({
-        //         center: {
-        //             x: (api.winWidth / 2),
-        //             y: (api.winHeight / 2)
-        //         },
-        //         size: 30,
-        //         fixed: true
-        //     }, function(ret) {
-        //         vm.UILoadId = ret.id;
-        //     });
-        //     apps.axget(
-        //         "customer/selectInfo", {},
-        //         function(data) {
-        //             if (data) {
-        //                 // 关闭打开的加载提示框
-        //                 UILoading.closeFlower({
-        //                     id: vm.UILoadId
-        //                 });
-        //                 alert(JSON.stringify(data));
-        //                 vm.selectuserInfo = {};
-        //                 vm.selectuserInfo = data;
-        //
-        //             }
-        //         });
-        // },
         getwebsiteInfo: function() {
             apps.axget(
                 "sysSet/selectShopUsername", {},
                 function(data) {
-                    // alert(JSON.stringify(data));
+                    console.log(JSON.stringify(data));
                     if (data) {
-                        vm.websiteInfo = '';
+                        vm.imgUrl = data.qrcode;
                         vm.websiteInfo = data.username;
-                        if (vm.websiteInfo) {
-                            // 预约中再生成二维码
-                            vm.makeCodeqrcode();
-                        }else{
-                          var oImg = $("<img src='./images/ewm_09.png' style='width: 100%;height:100%;'>");
-                          $("#qrcode").append(oImg);
-                        }
                     }
                 });
         },
 
-        // 生成二维码程序
-        makeCodeqrcode: function() {
-            $('#qrcode').html('');
-            $('#qrcodeBig').html('');
 
-            var qrcode = new QRCode(document.getElementById("qrcode"), {
-                width: 100,
-                height: 100
-            });
-            var content = 'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo;
-            qrcode.makeCode(content);
-
-            // 二维码大图(隐藏的)
-            var qrcodeBig = $("#qrcodeBig").qrcode({
-            			render:'canvas',
-            			width: 100,
-            			height:100,
-            			text: 'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo
-            		}).hide();
-            var canvas=$("#qrcodeBig").find('canvas').get(0);
-          //如果有循环,此句必不可少 qrcode.find('canvas').remove();
-          var urls = canvas.toDataURL('image/jpg');
-          if(urls){
-            apps.axget('battery/selects',{image:urls},function(data){
-              console.log(JSON.stringify(data) );
-            });
-          }
-
-        },
         qrcodebigImg: function() {
             // 二维码大图
             apps.openMapWinUrl('openqrcode_img', 'battery/appointinfo/openqrcode_img.html', {
-                qrcodebigImg:'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo
-            });          
+              imgUrl:vm.imgUrl,
+              userPhone:vm.websiteInfo
+            });
         },
         //分享注册链接到朋友圈
         shareWx: function() {
@@ -138,8 +66,48 @@ var vm = new Vue({
                     toast("当前设备未安装微信客户端");
                 }
             });
-        }
-    },
+        },
+        //分享有推广二维码的图片到朋友圈
+        shareWxFriends: function() {
+
+          var makeSharePic = api.require('makeSharePic');
+          console.log(makeSharePic)
+          makeSharePic.makePicture({
+              imgUrl: 'http://pic.jj20.com/up/allimg/911/021616153629/160216153629-1.jpg',
+              qrCode: 'http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=' + vm.websiteInfo,
+              savePath:'cache://image',
+              fileName:'myErWeiMa.png',
+              // expressType: '活动',
+              goodTitle: ' 带点吃的算法酸辣粉机啊龙卷风了啦司法所发',
+              nowPriceStatus: '现价 ：￥200',
+              discountType: '券券',
+              discountPrice: '30元',
+              finalPriceType: '券后价',
+              finalPrice: '100.0',
+              //    savePath:'cache://image',
+              //    fileName:'share.png',
+              // insertImage: true,
+              //    isHtmlText:true,
+          }, function(ret, err) {
+              if (ret.status) {
+                  wx.shareImage({
+                      apiKey: '',
+                      scene: 'timeline',
+                      contentUrl: ret.filePath
+                  }, function(ret, err) {
+                      if (ret.status) {
+                          alert('分享成功');
+                      } else {
+                          alert('分享失败');
+                      }
+                  });
+              } else {
+                console.log("失败")
+                  alert(err.message);
+              }
+          });
+      }
+    }
 });
 
 apiready = function() {
