@@ -64,9 +64,9 @@ var vm = new Vue({
                     switch (ret.code) {
                         // code为 1 说明返回成功
                         case '9000':
-                            api.sendEvent({
-                                name: 'updatedataops',
-                            });
+                            // api.sendEvent({
+                            //     name: 'updatedataops',
+                            // });
                             //支付成功跳转到 提示页面
                             api.alert({
                                 title: '操作提醒',
@@ -145,9 +145,9 @@ var vm = new Vue({
                 //支付成功
                 if (ret.status) {
                     //支付成功
-                    api.sendEvent({
-                        name: 'updatedataops',
-                    });
+                    // api.sendEvent({
+                    //     name: 'updatedataops',
+                    // });
                     //支付成功跳转到 提示页面
                     api.alert({
                         title: '操作提醒',
@@ -192,7 +192,7 @@ var vm = new Vue({
 
 
 apiready = function() {
-  console.log(JSON.stringify(api.pageParam));
+  // console.log(JSON.stringify(api.pageParam));
   vm.batteryCun = api.pageParam.data;
   vm.getbatterySelect();
 }
