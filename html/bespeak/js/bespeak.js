@@ -241,6 +241,6 @@ apiready = function() {
     api.addEventListener({
         name: 'hideBtn',
     }, function(ret, err) {
-      //  vm.isShow = false
+       vm.isShow = false
     });
 }
