@@ -34,8 +34,12 @@ var vm = new Vue({
           costdistribute:vm.batteryCun.costdistribute
         },function(data){
             toast("提交成功");
+            api.closeWin();
             api.sendEvent({
                 name: 'hideBtn',
+                extra: {
+                    complete: true,
+                }
             });
         })
       },
