@@ -211,14 +211,6 @@ function payBtn() {
         function(data) {
           vm.requestalipay = data;
           console.log(data);
-          if(vm.paymode == 2 && vm.wallet < vm.batteryCun.amount){
-            console.log("不足");
-            api.alert({
-              title:'操作提醒',
-              msg:'您的余额不足'
-            });
-            return false;
-          }
           if(vm.paymode == 2 && vm.wallet > vm.batteryCun.amount){
             // 钱包支付
             if (data == "") {
