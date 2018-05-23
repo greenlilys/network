@@ -24,7 +24,8 @@ var vm = new Vue({
         daystatistics: {},
         selOneNotice: {},
         selectRescueArr: [],  //  救援
-        isShow:true
+        isShow:true,
+        complete:false
     },
     methods: {
         //初始化
@@ -241,6 +242,7 @@ apiready = function() {
     api.addEventListener({
         name: 'hideBtn',
     }, function(ret, err) {
-       vm.isShow = false
+       vm.isShow = false;
+       vm.complete = ret.value.complete;
     });
 }

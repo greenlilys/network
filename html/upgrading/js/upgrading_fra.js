@@ -33,7 +33,10 @@ var vm = new Vue({
           amount:vm.batteryCun.amount,
           costdistribute:vm.batteryCun.costdistribute
         },function(data){
-            toast("提交成功")
+            toast("提交成功");
+            api.sendEvent({
+                name: 'hideBtn',
+            });
         })
       },
         // 支付模式选择
@@ -72,6 +75,9 @@ var vm = new Vue({
                                 api.closeWin();
                                 api.sendEvent({
                                     name: 'hideBtn',
+                                    extra: {
+                                        complete: true,
+                                    }
                                 });
                             });
                             break;
@@ -152,6 +158,9 @@ var vm = new Vue({
                         api.closeWin();
                         api.sendEvent({
                             name: 'hideBtn',
+                            extra: {
+                                complete: true,
+                            }
                         });
                     });
                 } else {
@@ -220,6 +229,9 @@ function payBtn() {
                     api.closeWin();
                     api.sendEvent({
                         name: 'hideBtn',
+                        extra: {
+                            complete: true,
+                        }
                     });
                 });
             }
