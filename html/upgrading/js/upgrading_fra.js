@@ -9,8 +9,8 @@
 var vm = new Vue({
     el: '#main',
     data: {
-      wallet:"",//钱包余额
-      batteryCun:{},//当前网点配置电池信息，需要缴纳的升级金额
+        wallet:"",//钱包余额
+        batteryCun:{},//当前网点配置电池信息，需要缴纳的升级金额
         paymode: 0,//支付方式
         usealipay: true, //使用支付宝
         usewxpay: false, //使用微信支付
@@ -64,9 +64,6 @@ var vm = new Vue({
                     switch (ret.code) {
                         // code为 1 说明返回成功
                         case '9000':
-                            // api.sendEvent({
-                            //     name: 'updatedataops',
-                            // });
                             //支付成功跳转到 提示页面
                             api.alert({
                                 title: '操作提醒',
@@ -144,10 +141,6 @@ var vm = new Vue({
             }, function(ret, err) {
                 //支付成功
                 if (ret.status) {
-                    //支付成功
-                    // api.sendEvent({
-                    //     name: 'updatedataops',
-                    // });
                     //支付成功跳转到 提示页面
                     api.alert({
                         title: '操作提醒',
@@ -197,7 +190,6 @@ apiready = function() {
   vm.getbatterySelect();
 }
 
-
 function payBtn() {
   console.log("paymode:" + vm.paymode + "msg:" + vm.batteryCun.msg + "amount:" + vm.batteryCun.amount + "costdistribute" + vm.batteryCun.costdistribute);
 
@@ -214,10 +206,6 @@ function payBtn() {
           if(vm.paymode == 2 && vm.wallet > vm.batteryCun.amount){
             // 钱包支付
             if (data == "") {
-                //支付成功跳转到 提示页面
-                // api.sendEvent({
-                //     name: 'updatedataops',
-                // });
                 //支付成功跳转到 提示页面
                 api.alert({
                     title: '操作提醒',
