@@ -24,6 +24,7 @@ var vm = new Vue({
         daystatistics: {},
         selOneNotice: {},
         selectRescueArr: [],  //  救援
+        isShow:true
     },
     methods: {
         //初始化
@@ -236,5 +237,10 @@ apiready = function() {
         name: 'shopBatteryServicesucesspst'
     }, function(ret) {
         vm.init();
+    });
+    api.addEventListener({
+        name: 'hideBtn',
+    }, function(ret, err) {
+      //  vm.isShow = false
     });
 }

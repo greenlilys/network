@@ -70,6 +70,9 @@ var vm = new Vue({
                                 msg: '电池增加配货成功',
                             }, function(ret, err) {
                                 api.closeWin();
+                                api.sendEvent({
+                                    name: 'hideBtn',
+                                });
                             });
                             break;
                         case '4000':
@@ -147,6 +150,9 @@ var vm = new Vue({
                         msg: '增配订单提交成功，请等待平台配货',
                     }, function(ret, err) {
                         api.closeWin();
+                        api.sendEvent({
+                            name: 'hideBtn',
+                        });
                     });
                 } else {
                     // code: 1
@@ -212,6 +218,9 @@ function payBtn() {
                     msg: '订单提交成功，请等待平台配货',
                 }, function(ret, err) {
                     api.closeWin();
+                    api.sendEvent({
+                        name: 'hideBtn',
+                    });
                 });
             }
           }else if(vm.paymode == 0 || vm.paymode == 1){
