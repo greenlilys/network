@@ -36,10 +36,7 @@ var vm = new Vue({
             toast("提交成功");
             api.closeWin();
             api.sendEvent({
-                name: 'hideBtn',
-                extra: {
-                    complete: true,
-                }
+                name: 'hideBtn'
             });
         })
       },
@@ -78,10 +75,8 @@ var vm = new Vue({
                             }, function(ret, err) {
                                 api.closeWin();
                                 api.sendEvent({
-                                    name: 'hideBtn',
-                                    extra: {
-                                        complete: true,
-                                    }
+                                    name: 'hideBtn'
+
                                 });
                             });
                             break;
@@ -161,10 +156,7 @@ var vm = new Vue({
                     }, function(ret, err) {
                         api.closeWin();
                         api.sendEvent({
-                            name: 'hideBtn',
-                            extra: {
-                                complete: true,
-                            }
+                            name: 'hideBtn'
                         });
                     });
                 } else {
@@ -232,10 +224,7 @@ function payBtn() {
                 }, function(ret, err) {
                     api.closeWin();
                     api.sendEvent({
-                        name: 'hideBtn',
-                        extra: {
-                            complete: true,
-                        }
+                        name: 'hideBtn'
                     });
                 });
             }

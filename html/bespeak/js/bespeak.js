@@ -24,8 +24,8 @@ var vm = new Vue({
         daystatistics: {},
         selOneNotice: {},
         selectRescueArr: [],  //  救援
-        isShow:true,
-        complete:false
+        complete:""
+
     },
     methods: {
         //初始化
@@ -96,6 +96,12 @@ var vm = new Vue({
             //       });
             // },20000);
             // timerArr.push(timer);
+        },
+        getIsComplete:function(){
+          apps.axget("shopUser/selectInfo",{},function(data){
+            console.log(JSON.stringify(data));
+            vm.complete = data.platbond;
+          })
         },
 
         //跳转到升级最低配置页面
@@ -216,13 +222,13 @@ var vm = new Vue({
                 function(data) {
                     vm.selectRescueArr= data.datas;
                 });
-
         }
     }
 });
 apiready = function() {
     // 实现沉浸式效果
     $api.fixStatusBar($api.dom("header"));
+    vm.getIsComplete();
     vm.init();
     //下拉刷新
     apps.pageDataF5(function() {
@@ -241,8 +247,7 @@ apiready = function() {
     });
     api.addEventListener({
         name: 'hideBtn',
-    }, function(ret, err) {
-       vm.isShow = false;
-       vm.complete = ret.value.complete;
+    }, function(ret, err){
+       vm.complete = 10000;
     });
 }
