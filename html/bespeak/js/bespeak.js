@@ -96,6 +96,8 @@ var vm = new Vue({
             //       });
             // },20000);
             // timerArr.push(timer);
+            //获取店铺缴纳的保证金
+            vm.getIsComplete();
         },
         getIsComplete:function(){
           apps.axget("shopUser/selectInfo",{},function(data){
@@ -228,7 +230,7 @@ var vm = new Vue({
 apiready = function() {
     // 实现沉浸式效果
     $api.fixStatusBar($api.dom("header"));
-    vm.getIsComplete();
+    // vm.getIsComplete();
     vm.init();
     //下拉刷新
     apps.pageDataF5(function() {
