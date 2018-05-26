@@ -13,7 +13,8 @@
 
 <body>
     <div class="aui-content aui-padded-15 aui-padded-b-15" id="join-frm" v-cloak>
-        <div class="aui-margin-15">
+        <div class="aui-margin-15" id="regest">
+          <div class="loadClient" @click="navLoadClinent">安装天牛客户端</div>
             <img src="images/logo_03.png" style="width: 4rem; margin:0 auto;">
             <h3 class="aui-margin-t-15">
                 <span v-if="storeSetdata.auditstatus!==2">
@@ -98,6 +99,6 @@
 <script type="text/javascript" src="../assets/js/zepto.min.js"></script>
 <script type="text/javascript" src="../assets/js/common.js"></script>
 <script type="text/javascript" src="../assets/js/vue.min.js"></script>
-<script type="text/javascript" src="js/join.js"></script>
+<script type="text/javascript" src="./js/join.js"></script>
 <script>
 </script>

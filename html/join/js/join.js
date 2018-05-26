@@ -53,6 +53,22 @@ var vm = new Vue({
                 number: '400-862-5918'
             });
         },
+        //跳转到客户端下载页面
+        navLoadClinent:function(){
+          var url = "http://downloadpkg.apicloud.com/app/download?path=http://7z1c8k.com1.z0.glb.clouddn.com/a485ac48c7081344085e8137005db091_d";
+
+                api.confirm({
+                title: '您确认安装天牛客户端吗？',
+                msg: '',
+                buttons: ['确定', '取消']
+            }, function(ret, err) {
+                var index = ret.buttonIndex;
+                if(ret.buttonIndex === 1){
+                    window.location.href = url;
+                  }
+            });
+        },
+
         // 登出
         loginOut: function() {
             //同步返回结果：
