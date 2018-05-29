@@ -44,7 +44,7 @@
             </li>
         </ul>
         <ul class="aui-list aui-list-noborder aui-padded-b-15">
-            <li class="aui-list-item aui-margin-b-10">
+            <li class="aui-list-item aui-margin-b-10" v-if="batteryselect.batteryList[0].groupnum > 0 || batteryselect.batteryList[1].groupnum > 6 || batteryselect.batteryList[2].groupnum > 9">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-title">配货成本</div>
                     <div class="aui-list-item-right price">

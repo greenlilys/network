@@ -33,18 +33,30 @@ var vm = new Vue({
                 "battery/select", {},
                 function(data) {
                     vm.batteryselect = data;
+                    //最低配置
+                    vm.batteryselect.batteryList[0].groupnum = 0;
+                    vm.batteryselect.batteryList[1].groupnum = 6;
+                    vm.batteryselect.batteryList[2].groupnum = 9;
                 });
         },
         // 加减选择
         change_goods_num: function(num, index) {
             var item = vm.batteryselect.batteryList[index];
+            var minNum;
             if (num == 1) {
                 item.groupnum++;
             } else {
-                if (item.groupnum <= 0) {
-                    item.groupnum = 0;
+                if(item.id == 5){
+                  minNum = 0;
+                }else if (item.id == 6) {
+                  minNum = 6;
+                }else {
+                  minNum = 9;
+                }
+                if (item.groupnum <= minNum) {
+                    item.groupnum = minNum;
                     api.toast({
-                        msg: '订购数量最低为 0',
+                        msg: '订购数量最低为 ' + minNum,
                         location: 'middle'
                     });
                     return false;
@@ -222,13 +234,13 @@ vm.$watch('batteryselect.batteryList', function() {
         sum += item.sumprice;
         vm.battery.push({
             id: item.id,
-            price: item.marketprice,
+            price: item.pickcost,
             num: item.groupnum,
-            total: (item.marketprice * item.groupnum)
+            total: (item.pickcost * item.groupnum)
         });
     });
-    vm.totalprice = sum;
-    // console.log(JSON.stringify(vm.battery));
+    vm.totalprice = sum - 1000*6 - 1200*9;
+    //console.log(JSON.stringify(vm.battery));
 }, { deep: true });
 
 apiready = function() {
