@@ -24,7 +24,8 @@ var vm = new Vue({
         moredatatxt:'',
         pageSize: 5,
         pageNo: 1,
-        totalPage: 0, // 总页数
+        totalPage: 0 // 总页数
+
     },
     methods: {
         //初始化
@@ -221,6 +222,10 @@ var vm = new Vue({
               }
           });
 
+
+        },
+        navToAddress:function(){
+          apps.openWin("navigation_win","my/navigation/navigation_win.html",{},false);
 
         }
     }

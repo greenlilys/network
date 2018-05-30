@@ -45,4 +45,8 @@
       <param name="apiKey" value="wxd25204dd5ae366b9"/>
       <param name="apiSecret" value="6bcb21d56f24629409f8875c5234e1e0"/>
   </feature>
+  <feature name="bMap">
+      <param name="android_api_key" value="GezZqDeZWRA6kxRQw7ytZUsytX4GuKDH" />
+      <param name="ios_api_key" value="RRMNELnyIyUxY5VXdEzRHEgKYKfx2nB5" />
+  </feature>
 </widget>

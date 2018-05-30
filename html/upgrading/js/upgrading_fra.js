@@ -7,14 +7,15 @@
 
 // 声明vue加载
 var vm = new Vue({
-    el: '#main',
+    el: '#content',
     data: {
         wallet:"",//钱包余额
         batteryCun:{},//当前网点配置电池信息，需要缴纳的升级金额
         paymode: 0,//支付方式
         usealipay: true, //使用支付宝
         usewxpay: false, //使用微信支付
-        requestalipay: '' //支付宝返回请求数据
+        requestalipay: '', //支付宝返回请求数据
+        platbond:''
     },
     methods: {
       //获取余额
@@ -25,6 +26,10 @@ var vm = new Vue({
                 console.log(JSON.stringify(data.wallet));
                   vm.wallet = data.wallet;
               });
+          apps.axget("shopUser/selectInfo",{},function(data){
+            console.log(JSON.stringify(data));
+            vm.platbond = data.platbond;
+          })
       },
       //达到最低配置的网点提交信息
       putShopInfo:function(){

@@ -38,6 +38,7 @@ body{
 #main div.pad{
   padding:0 .8rem;
 background:#fff;
+margin-bottom:0.5rem;
 }
 .putin:active{
   background:#ccc;
@@ -61,9 +62,10 @@ h3{
   line-height: 2.6rem;
   background:#fff;
   padding:0 .8rem;
-  position:absolute;
+  margin-top:0.5rem;
+  /*position:absolute;
   left:0;
-  bottom:0;
+  bottom:0;*/
 }
 h3.flex-wraph{
   align-items: center;
@@ -88,7 +90,10 @@ h3.flex-wraph{
   display: none !important;
 }
 ul{
-  margin-top:0.5rem;
+
   background:#fff;
 
+}
+.putin{
+  color:#fff;
 }

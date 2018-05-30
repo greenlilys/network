@@ -52,3 +52,10 @@
     left:50%;
     margin-left:-1rem;
 }
+#navToAddress{
+  outline: none;
+  border:none;
+  padding:0 0.5rem;
+  background:#FF7010;
+  color:#fff;
+}

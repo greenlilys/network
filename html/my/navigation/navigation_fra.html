@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div id="content"></div>
+</body>
+<script type="text/javascript" src="../../assets/js/api.js"></script>
+<script type="text/javascript" src="../../assets/js/common.js"></script>
+<script type="text/javascript" src="../../assets/js/vue.min.js"></script>
+<script>
+var vm = new Vue({
+  el:"#content",
+  data:{
+    bMap:{},
+    lon:"",
+    lat:""
+  },
+  methods:{
+    openMap:function(){
+      vm.bMap.getLocationServices(function(ret,err){
+        if(ret.enable){
+          vm.bMap.getLocation({
+              accuracy: '10m',
+              autoStop: true,
+              filter: 1,
+          }, function(ret, err) {
+              if (ret.status) {
+                  // alert(JSON.stringify(ret));
+                  vm.lon = ret.lon;
+                  vm.lat = ret.lat;
+                  // 保存如本地缓存
+                  $api.setStorage("setLocationxy", { x: vm.lon, y: vm.lat });
+                  vm.setMapGpsst(ret.lon, ret.lat);
+
+              } else {
+                  alert('定位异常码：' + err.code);
+              }
+          });
+        }else{
+            alert("请开启CPG定位")
+        }
+      })
+      vm.bMap.open({
+          rect: {
+              x: 0,
+              y: 0,
+              w: api.winWidth,
+              h: api.winHeight,
+              marginL:0,
+              marginT:0,
+              marginB:0,
+              marginR:0
+          },
+          center: {
+            lon: 113.7051399066432,
+            lat: 34.74273414220794
+          },
+          zoomLevel: 15,
+          showUserLocation: true,
+          // fixedOn: api.frameName,
+          fixed: true
+      }, function(ret) {
+          if (ret.status) {
+              api.toast({
+                  msg: '地图加载成功',
+                  duration: 2000,
+                  location: 'middle'
+              });
+          }
+      });
+
+      api.toast({
+          msg: '正在调取导航功能，请稍候',
+          duration: 2000,
+          location: 'middle'
+      });
+      var baiduNavigation = api.require('baiduNavigation');
+      baiduNavigation.start({
+          start: { // 起点信息.
+              position: { // 经纬度，与address配合可为空
+                  lon: vm.lon, // 经度.
+                  lat: vm.lat // 纬度.
+              },
+              //title: vm.selectShopInfo.name, // 描述信息
+              //address: vm.selectShopInfo.shopsAddress // 地址信息，与position配合为空
+          },
+          end: { // 终点信息.
+              position: { // 经纬度，与address配合可为空
+                  lon: "113.678551", // 经度.
+                  lat: "34.746608" // 纬度.
+              },
+              title: "", // 描述信息
+              address: "" // 地址信息，与position配合为空
+          }
+      }, function(ret, err) {
+          if (ret.status) {
+              api.alert({
+                  title: "提示",
+                  msg: '导航成功'
+              });
+          } else {
+              var msg = "未知错误";
+              if (1 == err.code) {
+                  msg = "获取地理位置失败";
+              }
+              if (2 == err.code) {
+                  msg = "定位服务未开启";
+              }
+              if (3 == err.code) {
+                  msg = "线路取消";
+              }
+              if (4 == err.code) {
+                  msg = "退出导航";
+              }
+              if (5 == err.code) {
+                  msg = "退出导航声明页面";
+              }
+              api.alert({
+                  title: "导航提示",
+                  msg: msg
+              });
+          }
+      });
+    },
+
+  }
+})
+apiready = function(){
+  vm.bMap = api.require('bMap');
+  vm.openMap();
+
+}
+
+</script>
+</html>
