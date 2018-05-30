@@ -119,9 +119,9 @@
 <body>
     <div id="content">
         <div id="imgBox" ontouchstart="touchstart()" ontouchend="touchend()" ontouchmove="touchmove()">
-            <img id="img">
+            <img :src="imgUrl" id="img">
             <div class="descrip border-t">
-                每推荐一位新注册用户，新用户完成安装注册后，推荐人每次可获得2000天牛币，新用户可获得1000天牛币。
+                每推荐一位新注册用户，新用户完成安装使用后，推荐人每次可获得2000天牛币，新用户可获得1000天牛币。
             </div>
         </div>
         <div class="warn">长按图片可以保存到手机或分享到朋友圈</div>
@@ -150,14 +150,22 @@
 <script type="text/javascript" src="../../assets/js/common.js"></script>
 <script type="text/javascript" src="../../assets/js/vue.min.js"></script>
 <script type="text/javascript">
+var vm  = new Vue({
+  el:"#content",
+  data:{
+    imgUrl:"",
+    userPhone:""
+  }
+})
 var sheetListHeight = $api.dom('.sheetList').offsetHeight;
 $('.sheetList').css("bottom","-" + sheetListHeight + "px");
 var obj = {};
+
 apiready = function() {
   api.parseTapmode();
-  var imgUrl = api.pageParam.imgUrl;
-  var userPhone = api.pageParam.userPhone;
-  $('#img').attr('src',imgUrl);
+  vm.imgUrl = api.pageParam.imgUrl;
+  vm.userPhone = api.pageParam.userPhone;
+  // $('#img').attr('src',imgUrl);
   obj.saveImg = saveImg;
   obj.shareImg = shareImg;
   obj.shareWebPage = shareWebPage;
@@ -166,7 +174,7 @@ apiready = function() {
   // 保存二维码图片
        function saveImg() {
            api.download({
-               url: imgUrl,
+               url: vm.imgUrl,
                savePath: 'fs://' + savaName,
                report: true,
                cache: true,
@@ -194,7 +202,7 @@ apiready = function() {
  //分享二维码图片到朋友圈
        function shareImg(){
         api.download({
-          url: imgUrl,
+          url: vm.imgUrl,
           savePath: 'fs://' + savaName,
           report: true,
           cache: true,
@@ -244,7 +252,7 @@ apiready = function() {
                        title: '天牛网注册链接',
                        description: '推广注册链接',
                        thumb: 'widget://image/logo.jpg',
-                       contentUrl: "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + userPhone
+                       contentUrl: "http://120.26.161.225:8082/tianniu-web/users/userRegister?iPhone=" + vm.userPhone
                    }, function(ret, err) {
                        if (ret.status) {
                            toast('分享成功');
