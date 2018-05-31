@@ -29,6 +29,7 @@
     <permission name="internet" />
     <permission name="bootCompleted" />
     <permission name="hardware" />
+    <preference name="backgroundMode" value="audio | location"/>
     <feature name="aliPayPlus">
         <param name="urlScheme" value="aliPayPlusA6058441380446" />
     </feature>
@@ -47,7 +48,13 @@
       <param name="apiSecret" value="6bcb21d56f24629409f8875c5234e1e0"/>
   </feature>
   <feature name="bMap">
-      <param name="android_api_key" value="GezZqDeZWRA6kxRQw7ytZUsytX4GuKDH" />
-      <param name="ios_api_key" value="RRMNELnyIyUxY5VXdEzRHEgKYKfx2nB5" />
+      <param name="android_api_key" value="a4gzskN04DGXY1xMR6KX3ITGS7cG2M9U" />
+      <param name="ios_api_key" value="SvkQYZ9CNxp8UriKKd0uEYj0wtxcG18g" />
   </feature>
+  <feature name="baiduNavigation">
+    <param name="android_api_key" value="a4gzskN04DGXY1xMR6KX3ITGS7cG2M9U" />
+    <!-- <param name="android_tts_appid" value="100568" /> -->
+    <param name="ios_api_key" value="SvkQYZ9CNxp8UriKKd0uEYj0wtxcG18g" />
+    <!-- <param name="ios_tts_appid" value="100567" /> -->
+</feature>
 </widget>
