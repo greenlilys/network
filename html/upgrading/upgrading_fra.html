@@ -15,8 +15,8 @@
         <ul class="list">
           <li class="border-b flex-wraph"><span>规格</span><span>现有数量</span><span>应补数量</span></li>
           <li class="border-b flex-wraph"><span>48V/20A</span><span>{{batteryCun.Five}}</span><span>0</span></li>
-          <li class="border-b flex-wraph"><span>60V/20A</span><span>{{batteryCun.Six}}</span><span>{{6-batteryCun.Six}}</span></li>
-          <li class="border-b flex-wraph"><span>72V/20A</span><span>{{batteryCun.Seven}}</span><span>{{9-batteryCun.Seven}}</span></li>
+          <li class="border-b flex-wraph"><span>60V/20A</span><span>{{batteryCun.Six}}</span><span>{{batteryCun.Six>=6 ? 0 : 6-batteryCun.Six}}</span></li>
+          <li class="border-b flex-wraph"><span>72V/20A</span><span>{{batteryCun.Seven}}</span><span>{{batteryCun.Seven>=9 ? 0 : 9-batteryCun.Seven}}</span></li>
           <li class="border-b"><span>配货成本:￥{{batteryCun.costdistribute}}</span></li>
           <li><span>平台保证金:￥{{platbond}}</span></li>
         </ul>

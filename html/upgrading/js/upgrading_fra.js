@@ -36,7 +36,8 @@ var vm = new Vue({
         apps.axpost("shopBattery/shopOverpay",{
           msg:vm.batteryCun.msg,
           amount:vm.batteryCun.amount,
-          costdistribute:vm.batteryCun.costdistribute
+          costdistribute:vm.batteryCun.costdistribute + vm.platbond,
+          paymode:3
         },function(data){
             toast("提交成功");
             api.closeWin();
@@ -207,13 +208,11 @@ apiready = function() {
 }
 
 function payBtn() {
-  console.log("paymode:" + vm.paymode + "msg:" + vm.batteryCun.msg + "amount:" + vm.batteryCun.amount + "costdistribute" + vm.batteryCun.costdistribute);
-
     apps.axpost(
         "shopBattery/shopOverpay", {
             msg:vm.batteryCun.msg,
             amount:vm.batteryCun.amount,
-            costdistribute:vm.batteryCun.costdistribute,
+            costdistribute:vm.batteryCun.costdistribute + vm.platbond,
             paymode: vm.paymode
         },
         function(data) {

@@ -15,14 +15,12 @@ var jumpUrl = {}; //跳转页面
     var serverconfig = {
         // 前端服务器IP
         'web_url': 'widget://html/',
-        // 后端服务器IP
-        // 'serviceIP': 'http://192.168.1.121:80/',
-        // 'serviceIP': 'http://120.27.204.61:8080/',
-	/** 测试后台 */
-         'serviceIP': 'http://192.168.0.101:8080/'
+	      //本地服务器
+        //  'serviceIP': 'http://192.168.0.101:8080/'
+          //测试服务器
         //  'serviceIP': 'http://47.100.250.162:8081/'
-
-        // 'serviceIP': 'http://tianniu.weidinghuo.com/'
+        //正式服务器
+        'serviceIP': 'http://www.tianniu.net.cn/'
     };
 
     // 项目访问 前端路径后缀
