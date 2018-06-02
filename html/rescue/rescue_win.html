@@ -39,8 +39,8 @@
                 </div>
             </li>
     </ul>
-        <ul class="aui-list aui-media-list">
-            <li class="aui-list-item aui-margin-b-15" v-for="item in rescueOrder_data.rescueOrderList">
+        <ul class="aui-list aui-media-list" style="background:rgba(0,0,0,0);">
+            <li class="aui-list-item aui-margin-b-15" v-for="item in rescueOrder_data.rescueOrderList" style="margin-bottom:1rem;background:#fff;">
                 <div class="aui-media-list-item-inner">
                     <div class="aui-list-item-inner">
                         <div class="aui-list-item-text">
@@ -70,16 +70,17 @@
                                 （距离：<span class="" v-text="item.distance">1.70</span>KM）<br><span class="price" v-text="item.faulttype"></span><br>
                                 <!-- orderstate订单状态 0：待维修 1：已维修  2：已撤销 -->
                                 <button style="background:#62b701;color:#ffffff;border:1px solid #62b701;" v-if="item.istakestate == 2" @click=takeOrder(item)>接单</button>&nbsp;&nbsp;
-                                <button style="background:#ff7010;color:#ffffff;border:1px solid #ff7010;" v-if="item.istakestate == 2" @click=refuseOrder(item)>撤销订单</button>
+                                <button style="background:#ff7010;color:#ffffff;border:1px solid #ff7010;" v-if="item.istakestate == 2" @click=refuseOrder(item)>撤单</button>
                                 <!-- <button style="background:#ff7010;color:#ffffff;border:1px solid #ff7010;" v-if="item.istakestate == 1 && item.paystate == 0" @click=backlog(item)>未完成订单</button> -->
                                 <br>
-                                <span class="price" v-if="item.paystate == 0">未付钱</span>
-                                <span class="price" v-if="item.paystate == 1">用户已付钱，订单完成。</span><br>
-                                <!-- istakestate订单生效 0：网点撤销订单   1：网点接受订单 2：等待网点操作 -->
-                                <span class="price" v-if="item.istakestate == 0">订单已撤销</span>
-                                <span v-if="item.istakestate == 1">订单已接受</span>
+                                <!-- <span class="price" v-if="item.paystate == 0">未付钱</span> -->
+                                <span v-if="item.paystate == 1">订单已完成</span>
+                                <!-- istakestate订单生效 0：网点撤销订单   1：网点接受订单 2：等待网点操作 3：用户已撤单 -->
+                                <span v-if="item.istakestate == 0">订单已撤销</span>
+                                <span v-if="item.istakestate == 1 && item.paystate == 0">订单已接受</span>
+                                <span v-if="item.istakestate == 3">用户已撤单</span>
                                 <br>
-                                <button id="navToAddress" @click="navToAddress">导航到救援地址</button>
+                                <button id="navToAddress" @click="navToAddress(item.x,item.y)">导航到救援地址</button>
                             </div>
                         </div>
                     </div>

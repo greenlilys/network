@@ -24,8 +24,9 @@ var vm = new Vue({
         moredatatxt:'',
         pageSize: 5,
         pageNo: 1,
-        totalPage: 0 // 总页数
-
+        totalPage: 0 ,// 总页数
+        lon:"",
+        lat:""
     },
     methods: {
         //初始化
@@ -34,6 +35,7 @@ var vm = new Vue({
             var timerArr = [];
             // var storeSetdata = $api.getStorage("storeSetdata");
             vm.getdaystatistics();
+            vm.getAddress();
             // alert("救援订单");
             // timer = setInterval(function() {
             //   apps.axget(
@@ -85,6 +87,7 @@ var vm = new Vue({
                 },
                 function(data) {
                     vm.rescueOrder_data.rescueOrderList = data;
+                    console.log(JSON.stringify(data));
                     // alert(JSON.stringify(vm.rescueOrder_data.rescueOrderList));
                     // if (data.totalPage <= 1 || vm.pageNo == data.totalPage) {
                     //     vm.moredatatxt = "暂无更多记录";
@@ -143,19 +146,16 @@ var vm = new Vue({
                   },
                   function(data){
                       if (data) {
-                        setTimeout(function(){
-                          api.closeToWin({
-                              name: 'root'
-                          });
-                        },300);
+                        vm.init();
+                        // setTimeout(function(){
+                        //   api.closeToWin({
+                        //       name: 'root'
+                        //   });
+                        // },300);
                       }
                   });
               }else {
-                setTimeout(function(){
-                  api.closeToWin({
-                      name: 'root'
-                  });
-                },300);
+                return false;
               }
           });
         },
@@ -174,19 +174,11 @@ var vm = new Vue({
                   },
                   function(data){
                       if (data) {
-                        setTimeout(function(){
-                          api.closeToWin({
-                              name: 'root'
-                          });
-                        },300);
+                        vm.init();
                       }
                   });
               }else {
-                setTimeout(function(){
-                  api.closeToWin({
-                      name: 'root'
-                  });
-                },300);
+                return false;
               }
           });
         },
@@ -224,8 +216,79 @@ var vm = new Vue({
 
 
         },
-        navToAddress:function(){
-          apps.openWin("navigation_win","my/navigation/navigation_win.html",{},false);
+        getAddress:function(){
+          vm.bMap.getLocationServices(function(ret,err){
+            if(ret.enable){
+              vm.bMap.getLocation({
+                  accuracy: '10m',
+                  autoStop: true,
+                  filter: 1,
+              }, function(ret, err) {
+                  if (ret.status) {
+                      console.log(JSON.stringify(ret));
+                      vm.lon = ret.lon;
+                      vm.lat = ret.lat;
+                      // 保存如本地缓存
+                  } else {
+                      alert('定位异常码：' + err.code);
+                  }
+              });
+            }else{
+                alert("请开启CPG定位")
+            }
+          })
+
+
+        },
+        navToAddress:function(lon,lat){
+          console.log(lon + "-----" + lat);
+          var baiduNavigation = api.require('baiduNavigation');
+          baiduNavigation.start({
+              start: { // 起点信息.
+                  position: { // 经纬度，与address配合可为空
+                      lon: vm.lon, // 经度.
+                      lat: vm.lat // 纬度.
+                  },
+                  //title: vm.selectShopInfo.name, // 描述信息
+                  //address: vm.selectShopInfo.shopsAddress // 地址信息，与position配合为空
+              },
+              end: { // 终点信息.
+                  position: { // 经纬度，与address配合可为空
+                      lon: lon, // 经度.
+                      lat: lat  // 纬度.
+                  },
+                  // title: "", // 描述信息
+                  // address: "" // 地址信息，与position配合为空
+              }
+          }, function(ret, err) {
+              if (ret.status) {
+                  // api.alert({
+                  //     title: "提示",
+                  //     msg: '导航成功'
+                  // });
+              } else {
+                  var msg = "未知错误";
+                  if (1 == err.code) {
+                      msg = "获取地理位置失败";
+                  }
+                  if (2 == err.code) {
+                      msg = "定位服务未开启";
+                  }
+                  if (3 == err.code) {
+                      msg = "线路取消";
+                  }
+                  if (4 == err.code) {
+                      msg = "退出导航";
+                  }
+                  if (5 == err.code) {
+                      msg = "退出导航声明页面";
+                  }
+                  api.alert({
+                      title: "导航提示",
+                      msg: msg
+                  });
+              }
+          });
 
         }
     }
@@ -233,6 +296,7 @@ var vm = new Vue({
 apiready = function() {
     // 实现沉浸式效果
     $api.fixStatusBar($api.dom("header"));
+    vm.bMap = api.require('bMap');
     vm.init();
     api.parseTapmode();
     //下拉刷新
