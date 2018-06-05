@@ -51,10 +51,10 @@
       <param name="android_api_key" value="a4gzskN04DGXY1xMR6KX3ITGS7cG2M9U" />
       <param name="ios_api_key" value="SvkQYZ9CNxp8UriKKd0uEYj0wtxcG18g" />
   </feature>
-  <feature name="baiduNavigation">
+  <!-- <feature name="baiduNavigation">
     <param name="android_api_key" value="a4gzskN04DGXY1xMR6KX3ITGS7cG2M9U" />
     <param name="android_tts_appid" value="11333122" />
     <param name="ios_api_key" value="SvkQYZ9CNxp8UriKKd0uEYj0wtxcG18g" />
     <param name="ios_tts_appid" value="11333340" />
-</feature>
+</feature> -->
 </widget>
