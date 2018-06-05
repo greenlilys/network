@@ -230,7 +230,8 @@ var vm = new Vue({
                       vm.lat = ret.lat;
                       // 保存如本地缓存
                   } else {
-                      alert('定位异常码：' + err.code);
+                      // alert('定位异常码：' + err.code);
+                       toast('GPS信号弱');
                   }
               });
             }else{
@@ -242,6 +243,7 @@ var vm = new Vue({
         },
         navToAddress:function(lon,lat){
           console.log(lon + "-----" + lat);
+          console.log(vm.lon + "-----" + vm.lat);
           var baiduNavigation = api.require('baiduNavigation');
           baiduNavigation.start({
               start: { // 起点信息.
