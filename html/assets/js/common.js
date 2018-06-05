@@ -18,9 +18,9 @@ var jumpUrl = {}; //跳转页面
 	      //本地服务器
         //  'serviceIP': 'http://192.168.0.102:8080/'
           //测试服务器
-         'serviceIP': 'http://47.100.250.162:8081/'
+        //  'serviceIP': 'http://47.100.250.162:8081/'
         //正式服务器
-        // 'serviceIP': 'http://www.tianniu.net.cn/'
+        'serviceIP': 'http://www.tianniu.net.cn/'
     };
 
     // 项目访问 前端路径后缀
